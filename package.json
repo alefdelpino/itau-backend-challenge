@@ -1,6 +1,6 @@
 {
   "name": "itau-backend-challenge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "start": "dotnet run --project ./src/FrameworksAndDrivers",
     "clean": "dotnet clean backend-challenge.sln",
