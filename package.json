@@ -1,0 +1,22 @@
+{
+  "name": "itau-backend-challenge",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "dotnet run --project ./src/FrameworksAndDrivers",
+    "clean": "dotnet clean backend-challenge.sln",
+    "restore": "dotnet restore backend-challenge.sln",
+    "build": "npm run restore && dotnet publish -c Release -o out",
+    "test": "dotnet test backend-challenge.sln /p:CollectCoverage=true /p:Exclude=\"[xunit*]\\*\" /p:CoverletOutputFormat=lcov /p:CoverletOutputFormat=lcov /p:CoverletOutput=coverage/ && npm run coverage && npm run report",
+    "coverage": "reportgenerator -reports:./tests/**/coverage.info -reporttypes:lcov -targetdir:./coverage",
+    "migrate": "dotnet ef database update --project ./src/FrameworksAndDrivers --startup-project ./src/FrameworksAndDrivers",
+    "migration": "dotnet ef migrations add InitialMigration --project ./src/FrameworksAndDrivers --startup-project ./src/FrameworksAndDrivers",
+    "report": "reportgenerator -reports:./tests/**/coverage.info -reporttypes:html -targetdir:./coverage",
+    "patch": "npm version patch -m 'chore(release): %s' && git push",
+    "minor": "npm version minor -m 'chore(release): %s' && git push",
+    "major": "npm version major -m 'chore(release): %s' && git push",
+    "release": "standard-version && git push --follow-tags"
+  },
+  "devDependencies": {
+    "standard-version": "^8.0.0"
+  }
+}
