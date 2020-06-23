@@ -1,0 +1,101 @@
+swagger: "2.0"
+info:
+  description: "Itau bank backend challenge"
+  version: "0.1.0"
+  title: "Itau bank backend challenge"
+  contact:
+    name: "Alef Bruno Delpino de Oliveira"
+    email: "alefdelpino@gmail.com"
+    url: "https://www.linkedin.com/in/alefdelpino/"
+basePath: "/"
+schemes:
+- "http"
+- "https"
+paths:
+   /v1/validations/password:
+    post:
+      tags:
+       - "Validations"
+      summary: "Validates a password"
+      description:  | 
+        #### * <span style="color:red"> Password is required,
+        #### * <span style="color:red"> Password should be at least 9 characters
+        #### * <span style="color:red"> Password should be at least 1 digit character
+        #### * <span style="color:red"> Password should be at least 1 lowercase letter
+        #### * <span style="color:red"> Password should be at least 1 uppercase letter
+        #### * <span style="color:red"> Password should be at least 1 special character
+      operationId: "ValidatePassword"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Password Object"
+          required: true
+          schema:
+            $ref: "#/definitions/Password" 
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ValidationStatus200'
+        '422':
+          description: "Error: Unprocessable Entity"
+          schema:
+            $ref: '#/definitions/ValidationStatus422'
+        '500':
+          description: Exception
+definitions:
+  Password:
+    type: "object"
+    properties:   
+      password:
+        type: "string"
+        description: "Password"
+        example: "Ag0Th@9q1#"
+    required:
+     - password
+  ValidationStatus200:
+    type: "object"
+    properties:   
+      response:
+        type: "boolean"
+        description: "Validation response value"
+        example: true
+      messages:
+        type: "array"
+        description: "List of messages (erros, warnings, etc.)"
+        items:
+          type: "string"
+        example: []                       
+    required:
+     - status
+     - success     
+  ValidationStatus422:
+    type: "object"
+    properties:
+      response:
+        type: "boolean"
+        description: "Validation response value"
+        example: false
+      messages:
+        type: "array"
+        description: "List of messages (erros, warnings, etc.)"
+        items:
+          type: "string"
+        example: [
+            "Password is required",
+            "Password should be at least 9 characters",
+            "Password should be at least 1 digit character",
+            "Password should be at least 1 lowercase letter",
+            "Password should be at least 1 uppercase letter",
+            "Password should be at least 1 special character"
+        ]                       
+    required:
+     - status
+     - success
+externalDocs:
+  description: "Find out more about Itau Bank backend challenge"
+  url: "https://github.com/itidigital/backend-challenge/blob/master/README.md"
